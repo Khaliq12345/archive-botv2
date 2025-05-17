@@ -109,12 +109,12 @@ async def index(
     return {"details": "Hello World"}
 
 
-@app.get("/get-log")
+@app.get("/api/get-log")
 async def get_log(key: str) -> str | None:
     log = await get_redis_values(key)
     return log
 
 
-@app.get("/clear-log")
+@app.get("/api/clear-log")
 async def clear_log(key: str) -> str | None:
     await flush_redis_db()
