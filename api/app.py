@@ -4,10 +4,12 @@ from typing import List
 sys.path.append(".")
 
 
+from core.config import API_KEY
 from services.redis_services import flush_redis_db, get_redis_values, set_redis_value
 from services.database import add_data
 from datetime import datetime
-from fastapi import FastAPI, HTTPException, BackgroundTasks
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Depends
+from fastapi.security import APIKeyHeader
 from urllib.parse import urlparse
 from models import detail_page
 from utilities.utils import clean_markdown
@@ -16,12 +18,23 @@ from constants.prompts import DETAIL_PAGE_PROMPT, LISTING_PAGE_PROMPT
 from services import llm_service, request_service
 from asyncio import to_thread
 
+query_scheme = APIKeyHeader(name="x-api-key")
 
-app = FastAPI(title="Archive Parser")
+
+def verify_api_key(api_key: str = Depends(query_scheme)) -> str:
+    if api_key != API_KEY:
+        raise HTTPException(detail="Invalid API KEY", status_code=404)
+    return api_key
+
+
+app = FastAPI(title="Archive Parser", dependencies=[Depends(verify_api_key)])
 
 
 async def start_processing(
-    html: str, base_url: str, primary_keywords: list[str], secondary_keywords: list[str]
+    html: str,
+    base_url: str,
+    primary_keywords: list[str],
+    secondary_keywords: list[str],
 ) -> None:
     cleaned_markdown = clean_markdown(html)
     await set_redis_value(
