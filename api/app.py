@@ -112,14 +112,17 @@ async def index(
     base_url: str,
     payload: dict,
 ) -> dict:
-    await set_redis_value(key=base_url, text="Starting the bot")
-    html = payload.get("html")
-    primary_keywords = payload.get("primary_keywords", [])
-    secondary_keywords = payload.get("secondary_keywords", [])
-    background_task.add_task(
-        start_processing, html, base_url, primary_keywords, secondary_keywords
-    )
-    return {"details": "Scraping started"}
+    try:
+        await set_redis_value(key=base_url, text="Starting the bot")
+        html = payload.get("html")
+        primary_keywords = payload.get("primary_keywords", [])
+        secondary_keywords = payload.get("secondary_keywords", [])
+        background_task.add_task(
+            start_processing, html, base_url, primary_keywords, secondary_keywords
+        )
+        return {"details": "Scraping started"}
+    except Exception as e:
+        raise HTTPException(detail=str(e), status_code=500)
 
 
 @app.get("/api/get-log")
