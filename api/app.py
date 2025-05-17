@@ -106,7 +106,7 @@ async def index(
     background_task.add_task(
         start_processing, html, base_url, primary_keywords, secondary_keywords
     )
-    return {"details": "Hello World"}
+    return {"details": "Scraping started"}
 
 
 @app.get("/api/get-log")
