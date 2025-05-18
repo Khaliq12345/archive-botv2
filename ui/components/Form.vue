@@ -26,6 +26,16 @@
           </button>
         </div>
       </form>
+      
+      <!-- // Show alert -->
+      <UAlert
+        title="Bot started"
+        color="success"
+        class="w-full"
+        v-show="showAlert"
+        close
+        @click="showAlert = !showAlert"
+      />
     </div>
 </template>
 
@@ -35,6 +45,7 @@ const baseUrl = ref('')
 const htmlContent = ref('')
 const primaryKeywords = ref('')
 const secondaryKeywords = ref('')
+const showAlert = ref(false)
 
 async function startProcess() {
   // seperating the keywords before sending them
@@ -52,6 +63,8 @@ async function startProcess() {
         'secondary_keywords': sks
       }
     })
+
+    showAlert.value = !showAlert.value
   }
 }
 </script>

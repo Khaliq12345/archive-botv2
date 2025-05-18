@@ -3,20 +3,20 @@
     <UContainer>
       <!-- Main Logs Card-->
       <div class="mx-auto px-4 py-5 my-3 text-center">
-        <h1 class="text-2xl font-bold mb-4">View Logs</h1>
+        <h1 class="text-2xl font-bold mb-4 text-black">View Logs</h1>
 
         <!-- Input -->
         <UInput 
-            color="neutral" v-model="logOf" type="text" icon="i-heroicons-link" 
+            color="neutral" v-model="logOf" type="text"
             class="w-full [&_input]:text-black [&_input]:dark:text-black"
             placeholder="Show Logs of :" 
         />
-        <UButton class="text-black" :disabled="!logOf" :loading="loading" @click="getLogs" 
+        <UButton class="text-black m-2" :disabled="!logOf" :loading="loading" @click="getLogs" 
             label="Process" color="primary" icon="i-heroicons-clipboard-document" size="xl"
         />
         
         <!-- Outputs -->
-        <div class="bg-info-100 rounded-xl border-1 mx-auto px-4 pt-5 my-4">
+        <div class="bg-info-100 rounded-xl border-1 mx-auto px-4 pt-5 my-4 text-black">
           <div v-if="loading" class="my-5 mx-5 h-110 flex justify-center items-center">
             <UProgress />
           </div>
@@ -32,10 +32,10 @@
         <!-- Refresh -->
         <div class="justify-start flex">
           <UButton label="Refresh Logs" :disabled="logGot.length==0" icon="i-heroicons-arrow-path"
-            class="justify-center text-blue-500" @click="getLogs" color="info"/>
+            class="justify-center" @click="getLogs" color="info"/>
             <!-- Clear -->
             <UButton label="Clear Logs" :disabled="logOf2.length==0" icon="i-heroicons-archive-box-x-mark"
-            class="justify-center ml-5 text-red-500" @click="clearLogs" color="error" />
+            class="justify-center ml-5" @click="clearLogs" color="error" />
         </div>
 
       </div>
