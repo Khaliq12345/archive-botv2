@@ -15,8 +15,6 @@ export default defineEventHandler(async (event) => {
     base_url: query.base_url
   }
 
-  console.log(body, urlAPI, params)
-
   try {
     const response = await $fetch(event.path, {
         baseURL: urlAPI,
