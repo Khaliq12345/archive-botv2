@@ -55,7 +55,7 @@ async def start_processing(
 
     # parse the article htmls
     results: List[dict] = await request_service.main(article_links)
-    print(f"Total articles: {len(results)}")
+    await set_redis_value(key=base_url, text=f"Total articles: {len(results)}")
     for result in results:
         markdown = result.get("markdown")
         url = result.get("url")
