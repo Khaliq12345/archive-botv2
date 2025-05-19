@@ -105,6 +105,8 @@ async def start_processing(
             )
             await set_redis_value(key=base_url, text="Article parsing done")
 
+    await set_redis_value(key=base_url, text="✅ Scraping and Analysis completed ✅")
+
 
 @app.post("/api/start-process")
 async def index(
